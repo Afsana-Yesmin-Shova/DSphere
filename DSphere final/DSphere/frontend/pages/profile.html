@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DSphere — My Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/variables.css"/>
+  <link rel="stylesheet" href="../css/dashboard.css"/>
+  <style>
+    .profile-hero{background:var(--up-primary);border-radius:16px;padding:32px;margin-bottom:24px;display:flex;align-items:center;gap:24px;position:relative;overflow:hidden}
+    .profile-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(0,212,255,.12) 0%,transparent 60%)}
+    .profile-avatar-large{width:80px;height:80px;border-radius:50%;background:var(--up-accent);color:var(--up-primary);font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;border:3px solid rgba(255,255,255,.15)}
+    .profile-hero__name{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:4px;position:relative;z-index:1}
+    .profile-hero__email{font-size:.875rem;color:rgba(255,255,255,.6);position:relative;z-index:1}
+    .profile-hero__badge{position:relative;z-index:1;margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.3);color:var(--up-accent);font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:999px}
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+    .info-cell{background:var(--up-surface);border:1px solid var(--up-border);border-radius:12px;padding:18px 20px}
+    .info-cell__label{font-size:.72rem;font-weight:500;color:var(--up-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+    .info-cell__value{font-size:.95rem;font-weight:500;color:var(--up-primary);word-break:break-all}
+    .info-cell__value.mono{font-family:'DM Sans',monospace;font-size:.85rem}
+    .info-cell__sub{font-size:.72rem;color:var(--up-muted);margin-top:4px}
+    .edit-name-form{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+    .edit-name-input{padding:7px 12px;border:1.5px solid var(--up-border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.875rem;color:var(--up-text);background:var(--up-bg);outline:none;flex:1;min-width:140px;transition:border-color .2s}
+    .edit-name-input:focus{border-color:var(--up-accent)}
+    .session-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--up-border)}
+    .session-item:last-child{border-bottom:none}
+    .session-icon{width:36px;height:36px;border-radius:10px;background:var(--up-bg);border:1px solid var(--up-border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+    .session-body{flex:1}
+    .session-name{font-size:.85rem;font-weight:500;color:var(--up-primary)}
+    .session-detail{font-size:.72rem;color:var(--up-muted);margin-top:2px}
+    .session-current{font-size:.65rem;font-weight:700;background:rgba(0,212,255,.1);color:var(--up-accent);padding:2px 7px;border-radius:999px;border:1px solid rgba(0,212,255,.2)}
+    @media(max-width:760px){.info-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar__logo">
+    <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#00D4FF" stroke-width="1.5" opacity="0.35"/><circle cx="24" cy="24" r="14" stroke="#00D4FF" stroke-width="1.5"/><ellipse cx="24" cy="24" rx="14" ry="6" stroke="#00D4FF" stroke-width="1.5" opacity="0.7"/><line x1="24" y1="10" x2="24" y2="38" stroke="#00D4FF" stroke-width="1.5" opacity="0.7"/><circle cx="24" cy="24" r="3" fill="#00D4FF"/></svg>
+    <span class="sidebar__logo-text">DSphere</span>
+  </div>
+  <nav class="sidebar__nav">
+    <span class="nav-section-label">Workspace</span>
+    <a href="dashboard.html" class="nav-item"><svg class="nav-item__icon" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg><span>Dashboard</span></a>
+    <a href="storage.html" class="nav-item"><svg class="nav-item__icon" viewBox="0 0 20 20" fill="none"><path d="M3 5a2 2 0 012-2h10a2 2 0 012 2v2H3V5z" stroke="currentColor" stroke-width="1.4"/><path d="M3 7h14v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.4"/></svg><span>Cloud Storage</span></a>
+    <a href="messenger.html" class="nav-item"><svg class="nav-item__icon" viewBox="0 0 20 20" fill="none"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v7a2 2 0 01-2 2H6l-4 3V5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg><span>Messenger</span></a>
+    <a href="network.html" class="nav-item"><svg class="nav-item__icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.4"/><circle cx="3" cy="4" r="2" stroke="currentColor" stroke-width="1.4"/><circle cx="17" cy="4" r="2" stroke="currentColor" stroke-width="1.4"/><circle cx="3" cy="16" r="2" stroke="currentColor" stroke-width="1.4"/><circle cx="17" cy="16" r="2" stroke="currentColor" stroke-width="1.4"/></svg><span>Network Suggestor</span></a>
+  </nav>
+  <div class="sidebar__footer">
+    <div class="sidebar__user">
+      <div class="sidebar__avatar" id="user-avatar">?</div>
+      <div class="sidebar__user-info">
+        <div class="sidebar__user-name" id="user-name-side">Loading…</div>
+        <div class="sidebar__user-role" id="user-role-side">user</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main-area">
+  <header class="topbar">
+    <span class="topbar__title">My Profile</span>
+    <div class="topbar__actions">
+      <button class="btn btn-ghost btn-sm" onclick="logout()">
+        <svg viewBox="0 0 20 20" fill="none" style="width:14px;height:14px"><path d="M13 3h4v14h-4M9 15l4-5-4-5M2 10h11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Sign out
+      </button>
+    </div>
+  </header>
+
+  <div class="page-content">
+
+    <!-- Hero -->
+    <div class="profile-hero">
+      <div class="profile-avatar-large" id="hero-avatar">?</div>
+      <div>
+        <div class="profile-hero__name" id="hero-name">Loading…</div>
+        <div class="profile-hero__email" id="hero-email">—</div>
+        <div class="profile-hero__badge" id="hero-badge">
+          <span id="hero-role-dot" style="width:6px;height:6px;border-radius:50%;background:var(--up-accent);display:inline-block"></span>
+          <span id="hero-role">Student</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info grid -->
+    <div class="info-grid">
+      <div class="info-cell">
+        <div class="info-cell__label">Full Name</div>
+        <div class="info-cell__value" id="info-name">—</div>
+        <div class="edit-name-form">
+          <input class="edit-name-input" type="text" id="name-input" placeholder="Update display name"/>
+          <button class="btn btn-primary btn-sm" onclick="saveName()">Save</button>
+        </div>
+        <div class="info-cell__sub" id="name-feedback" style="color:var(--up-success)"></div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell__label">University Email</div>
+        <div class="info-cell__value mono" id="info-email">—</div>
+        <div class="info-cell__sub">Cannot be changed — university issued</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell__label">Account Role</div>
+        <div class="info-cell__value" id="info-role">—</div>
+        <div class="info-cell__sub">Assigned by administrator</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell__label">Verification Status</div>
+        <div class="info-cell__value" id="info-verified">—</div>
+        <div class="info-cell__sub">OTP email verification</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell__label">Storage Used</div>
+        <div class="info-cell__value" id="info-storage">—</div>
+        <div class="info-cell__sub">of 500 MB quota</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell__label">Member Since</div>
+        <div class="info-cell__value" id="info-since">—</div>
+        <div class="info-cell__sub">Account creation date</div>
+      </div>
+    </div>
+
+    <!-- Security actions -->
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-title">Security Actions</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <button class="btn btn-ghost" onclick="window.location.href='index.html?tab=forgot'">
+          <svg viewBox="0 0 20 20" fill="none" style="width:15px;height:15px"><rect x="3" y="9" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 9V6a3 3 0 016 0v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Change Password
+        </button>
+        <button class="btn btn-ghost" onclick="logout()">
+          <svg viewBox="0 0 20 20" fill="none" style="width:15px;height:15px"><path d="M13 3h4v14h-4M9 15l4-5-4-5M2 10h11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Sign Out All Sessions
+        </button>
+      </div>
+    </div>
+
+    <!-- Current session -->
+    <div class="card">
+      <div class="card-title">Active Session</div>
+      <div class="session-item">
+        <div class="session-icon">🌐</div>
+        <div class="session-body">
+          <div class="session-name">This Browser <span class="session-current">Current</span></div>
+          <div class="session-detail" id="session-detail">Signed in · JWT session active</div>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="logout()">End</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" style="position:fixed;bottom:24px;right:24px;background:var(--up-primary);color:#fff;padding:11px 20px;border-radius:10px;font-size:.85rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:300;border-left:4px solid var(--up-accent)"></div>
+
+<script>
+'use strict';
+const API_BASE='https://your-backend.onrender.com';
+function getToken(){return sessionStorage.getItem('dsphere_access')||'';}
+function getUser(){try{return JSON.parse(sessionStorage.getItem('dsphere_user')||'{}');}catch{return{};}}
+function logout(){sessionStorage.clear();window.location.href='index.html';}
+function fmtBytes(b){if(!b||b<1024)return(b||0)+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(1)+' MB';}
+function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.style.borderLeftColor=type==='success'?'#2E7D32':'#E53935';t.style.opacity='1';t.style.pointerEvents='auto';clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';t.style.pointerEvents='none';},3000);}
+
+async function saveName(){
+  const val=document.getElementById('name-input').value.trim();
+  if(val.length<2){showToast('Name must be at least 2 characters.','error');return;}
+  // Update locally — full backend endpoint can be added as an extension
+  const user=getUser(); user.name=val;
+  sessionStorage.setItem('dsphere_user',JSON.stringify(user));
+  document.getElementById('info-name').textContent=val;
+  document.getElementById('hero-name').textContent=val;
+  document.getElementById('hero-avatar').textContent=val.charAt(0).toUpperCase();
+  document.getElementById('user-avatar').textContent=val.charAt(0).toUpperCase();
+  document.getElementById('user-name-side').textContent=val;
+  document.getElementById('name-feedback').textContent='✓ Name updated locally';
+  document.getElementById('name-input').value='';
+  showToast('Display name updated.');
+}
+
+document.addEventListener('DOMContentLoaded',async()=>{
+  if(!getToken()){window.location.href='index.html';return;}
+  const user=getUser();
+  const name=user.name||user.email||'User';
+  document.getElementById('user-name-side').textContent=name;
+  document.getElementById('user-role-side').textContent=user.role||'user';
+  document.getElementById('user-avatar').textContent=name.charAt(0).toUpperCase();
+
+  try{
+    const r=await fetch(API_BASE+'/auth/me',{headers:{'Authorization':'Bearer '+getToken()}});
+    if(r.ok){
+      const me=await r.json();
+      sessionStorage.setItem('dsphere_user',JSON.stringify(me));
+      const n=me.name||me.email;
+      document.getElementById('hero-avatar').textContent=n.charAt(0).toUpperCase();
+      document.getElementById('hero-name').textContent=me.name||'—';
+      document.getElementById('hero-email').textContent=me.email;
+      document.getElementById('hero-role').textContent=me.role==='admin'?'System Administrator':'Student';
+      document.getElementById('info-name').textContent=me.name||'—';
+      document.getElementById('info-email').textContent=me.email;
+      document.getElementById('info-role').textContent=me.role==='admin'?'🔴 Administrator':'🟢 Student';
+      document.getElementById('info-verified').textContent=me.verified?'✓ Email Verified':'✗ Not Verified';
+      document.getElementById('info-verified').style.color=me.verified?'#2E7D32':'#E53935';
+      document.getElementById('info-storage').textContent=fmtBytes(me.storage_used_bytes||0);
+      if(me.created_at){
+        document.getElementById('info-since').textContent=new Date(me.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+      }
+      document.getElementById('session-detail').textContent='Signed in as '+me.email+' · JWT session';
+    }
+  }catch(_){}
+});
+</script>
+</body>
+</html>

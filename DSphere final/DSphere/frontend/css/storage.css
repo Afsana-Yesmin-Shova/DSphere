@@ -1,0 +1,86 @@
+/* ============================================================
+   DSphere — storage.css
+   ============================================================ */
+
+/* ── DROP ZONE ───────────────────────────────────────────── */
+.drop-zone {
+  border: 2px dashed var(--up-border);
+  border-radius: 16px;
+  padding: 48px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: var(--up-surface);
+  margin-bottom: 28px;
+}
+.drop-zone.drag-over {
+  border-color: var(--up-accent);
+  background: rgba(0,212,255,.04);
+}
+.drop-zone__icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+.drop-zone__title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--up-primary); margin-bottom: 6px; }
+.drop-zone__sub   { font-size: 0.82rem; color: var(--up-muted); }
+.drop-zone__types { font-size: 0.72rem; color: var(--up-muted); margin-top: 8px; letter-spacing: 0.02em; }
+
+/* ── UPLOAD PROGRESS ─────────────────────────────────────── */
+.upload-queue { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.upload-item {
+  background: var(--up-bg); border: 1px solid var(--up-border);
+  border-radius: 10px; padding: 10px 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.upload-item__icon { font-size: 1.3rem; flex-shrink: 0; }
+.upload-item__info { flex: 1; min-width: 0; }
+.upload-item__name { font-size: 0.85rem; font-weight: 500; color: var(--up-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.upload-item__size { font-size: 0.72rem; color: var(--up-muted); margin-top: 2px; }
+.upload-item__bar  { height: 4px; background: var(--up-border); border-radius: 999px; margin-top: 6px; overflow: hidden; }
+.upload-item__fill { height: 100%; background: var(--up-accent); border-radius: 999px; transition: width 0.3s; }
+.upload-item__status { font-size: 0.72rem; flex-shrink: 0; }
+.status-done    { color: var(--up-success); }
+.status-error   { color: var(--up-error); }
+.status-loading { color: var(--up-accent); }
+
+/* ── FILE TABLE ──────────────────────────────────────────── */
+.file-toolbar {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px; flex-wrap: wrap;
+}
+.search-field {
+  flex: 1; min-width: 160px;
+  position: relative;
+}
+.search-field__icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--up-muted); }
+.search-input {
+  width: 100%; padding: 8px 12px 8px 34px;
+  border: 1.5px solid var(--up-border); border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+  background: var(--up-bg); color: var(--up-text); outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--up-accent); }
+
+.file-table { width: 100%; border-collapse: collapse; }
+.file-table th {
+  text-align: left; padding: 8px 12px;
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--up-muted); text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--up-border);
+}
+.file-table td { padding: 10px 12px; border-bottom: 1px solid var(--up-border); font-size: 0.875rem; vertical-align: middle; }
+.file-table tr:last-child td { border-bottom: none; }
+.file-table tr:hover td { background: var(--up-bg); }
+
+.file-icon { font-size: 1.3rem; margin-right: 8px; vertical-align: middle; }
+.file-name { font-weight: 500; color: var(--up-primary); }
+.file-size { color: var(--up-muted); font-size: 0.8rem; }
+.file-date { color: var(--up-muted); font-size: 0.8rem; }
+
+.empty-state { text-align: center; padding: 48px 24px; color: var(--up-muted); }
+.empty-state__icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.35; }
+.empty-state__msg  { font-size: 0.9rem; }
+
+/* quota bar */
+.quota-bar { height: 8px; background: var(--up-border); border-radius: 999px; overflow: hidden; margin-top: 8px; }
+.quota-fill { height: 100%; border-radius: 999px; background: var(--up-accent); transition: width 0.6s ease; }
+.quota-fill.warn { background: #F59E0B; }
+.quota-fill.over { background: var(--up-error); }

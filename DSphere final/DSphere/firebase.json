@@ -1,0 +1,32 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "hosting": {
+    "public": "frontend",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      { "source": "/", "destination": "/pages/index.html" },
+      { "source": "/dashboard", "destination": "/pages/dashboard.html" },
+      { "source": "/storage", "destination": "/pages/storage.html" },
+      { "source": "/messenger", "destination": "/pages/messenger.html" },
+      { "source": "/network", "destination": "/pages/network.html" },
+      { "source": "/admin", "destination": "/pages/admin/admin-dashboard.html" },
+      { "source": "**", "destination": "/pages/index.html" }
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          { "key": "X-Frame-Options", "value": "DENY" },
+          { "key": "X-Content-Type-Options", "value": "nosniff" },
+          { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        ]
+      }
+    ]
+  }
+}
