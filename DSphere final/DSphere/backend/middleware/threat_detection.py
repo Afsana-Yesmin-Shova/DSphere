@@ -16,7 +16,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Dict, List
 
-from starlette.middleware.base import BaseMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response, JSONResponse
 
@@ -92,7 +92,7 @@ def reset_risk(ip: str) -> bool:
 
 
 # ── Middleware ─────────────────────────────────────────────────────────────────
-class ThreatDetectionMiddleware(BaseMiddleware):
+class ThreatDetectionMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next) -> Response:
         ip  = request.client.host if request.client else "unknown"
