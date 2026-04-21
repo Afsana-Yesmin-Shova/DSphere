@@ -10,3 +10,5 @@ slowapi
 passlib
 bcrypt
 pyotp
+python-jose[cryptography]
+resend
