@@ -12,3 +12,4 @@ bcrypt
 pyotp
 python-jose[cryptography]
 resend
+email-validator
