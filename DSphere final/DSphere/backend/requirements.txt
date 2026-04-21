@@ -7,3 +7,5 @@ pydantic
 pydantic-settings
 cloudinary==1.40.0
 slowapi
+passlib
+bcrypt
