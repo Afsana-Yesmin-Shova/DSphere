@@ -194,7 +194,7 @@
 
 <script>
 'use strict';
-const API_BASE='https://dsphere.onrender.com/';
+const API_BASE='https://dsphere.onrender.com';
 const QUOTA_MAX=500*1024*1024;
 function getToken(){return sessionStorage.getItem('dsphere_access')||'';}
 function getUser(){try{return JSON.parse(sessionStorage.getItem('dsphere_user')||'{}');}catch{return{};}}
