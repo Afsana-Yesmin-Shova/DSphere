@@ -864,23 +864,16 @@ function saveSession(data) {
   sessionStorage.setItem('dsphere_refresh', data.refresh_token ||'');
   sessionStorage.setItem('dsphere_user',    JSON.stringify(data.user||{}));
 }
+async function apiFetch(endpoint, options={}) {
+  const url=`${API_BASE}${endpoint}`;
+  const headers={'Content-Type':'application/json'};
+  const token=sessionStorage.getItem('dsphere_access');
+  if(token) headers['Authorization']=`Bearer ${token}`;
+  const res=await fetch(url,{...options, headers:{...headers,...(options.headers||{})}});
+  const data=await res.json();
+  if(!res.ok) throw {status:res.status, detail:data.detail||'Request failed.'};
+  return data;
 
-const data = await apiFetch('/auth/register', {
-  method: 'POST',
-  body: JSON.stringify({ name, email, password })
-});
-
-// if backend returns token
-if (data.access_token) {
-  saveSession(data);
-  showToast('Account created successfully!');
-  setTimeout(() => {
-    window.location.href = 'dashboard.html';
-  }, 1000);
-} else {
-  showToast('Account created! Please login.');
-  switchTab('login');
-}
 
 function startOtpTimer(seconds=120) {
   const cdEl=document.getElementById('otp-countdown');
