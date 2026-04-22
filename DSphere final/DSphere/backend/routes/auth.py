@@ -37,12 +37,7 @@ class RegisterRequest(BaseModel):
     email: EmailStr
     password: str
 
-    @field_validator("email")
-    @classmethod
-    def must_be_university_email(cls, v: str) -> str:
-        if not v.lower().endswith(f"@{settings.ALLOWED_EMAIL_DOMAIN}"):
-            raise ValueError(f"Email must end in @{settings.ALLOWED_EMAIL_DOMAIN}")
-        return v.lower()
+    
 
     @field_validator("password")
     @classmethod
@@ -81,12 +76,7 @@ class OtpVerifyRequest(BaseModel):
 class ForgotPasswordRequest(BaseModel):
     email: EmailStr
 
-    @field_validator("email")
-    @classmethod
-    def must_be_university_email(cls, v: str) -> str:
-        if not v.lower().endswith(f"@{settings.ALLOWED_EMAIL_DOMAIN}"):
-            raise ValueError(f"Email must end in @{settings.ALLOWED_EMAIL_DOMAIN}")
-        return v.lower()
+    
 
 
 class ResetPasswordRequest(BaseModel):
