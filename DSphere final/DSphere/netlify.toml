@@ -1,7 +1,7 @@
 # DSphere — netlify.toml
 
 [build]
-  publish = "frontend"
+  publish = "DSphere final/DSphere/frontend"
   command = "echo 'Static site — no build step'"
 
 # Clean URL rewrites
