@@ -10,6 +10,220 @@
   <link rel="stylesheet" href="/css/variables.css"/>
   <link rel="stylesheet" href="/css/dashboard.css"/>
   <link rel="stylesheet" href="/css/messenger.css"/>
+  <style>
+    :root {
+  --up-bg: #f8fafc;
+  --up-surface: #ffffff;
+  --up-primary: #0a2540;
+  --up-accent: #00d4ff;
+  --up-text: #15273f;
+  --up-muted: rgba(21, 39, 63, 0.72);
+  --up-border: rgba(10, 37, 64, 0.14);
+  --up-success: #22c55e;
+  --up-error: #e53935;
+  --pw-weak: #fb7185;
+  --pw-fair: #fbbf24;
+  --pw-good: #38bdf8;
+  --pw-strong: #22c55e;
+}
+    /* ============================================================
+   DSphere — dashboard.css
+   Shared layout: sidebar nav, topbar, page shell
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--up-bg);
+  color: var(--up-text);
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar {
+  width: 240px; min-height: 100vh;
+  background: var(--up-primary);
+  display: flex; flex-direction: column;
+  padding: 0;
+  position: fixed; top: 0; left: 0; bottom: 0;
+  z-index: 100;
+  transition: width 0.25s;
+}
+
+.sidebar__logo {
+  display: flex; align-items: center; gap: 10px;
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.sidebar__logo svg { width: 32px; height: 32px; }
+.sidebar__logo-text {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 1.35rem; color: #fff; letter-spacing: -0.02em;
+}
+
+.sidebar__nav {
+  flex: 1; padding: 16px 12px;
+  display: flex; flex-direction: column; gap: 2px;
+  overflow-y: auto;
+}
+
+.nav-section-label {
+  font-size: 0.65rem; font-weight: 500;
+  color: rgba(255,255,255,.28);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 12px 8px 6px;
+}
+
+.nav-item {
+  display: flex; align-items: center; gap: 11px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: rgba(255,255,255,.62);
+  font-size: 0.88rem; font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+.nav-item:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.9); }
+.nav-item.active {
+  background: rgba(0,212,255,.12);
+  color: #fff;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute; left: 0; top: 6px; bottom: 6px;
+  width: 3px; background: var(--up-accent);
+  border-radius: 0 2px 2px 0;
+}
+.nav-item__icon { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.75; }
+.nav-item.active .nav-item__icon { opacity: 1; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--up-accent); color: var(--up-primary);
+  font-size: 0.65rem; font-weight: 700;
+  padding: 2px 6px; border-radius: 999px;
+  line-height: 1.4;
+}
+
+.sidebar__footer {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.sidebar__user {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sidebar__user:hover { background: rgba(255,255,255,.06); }
+.sidebar__avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--up-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700;
+  color: var(--up-primary); flex-shrink: 0;
+}
+.sidebar__user-info { flex: 1; overflow: hidden; }
+.sidebar__user-name {
+  font-size: 0.82rem; font-weight: 500; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sidebar__user-role { font-size: 0.7rem; color: rgba(255,255,255,.38); }
+
+/* ── MAIN AREA ───────────────────────────────────────────── */
+.main-area {
+  margin-left: 240px;
+  flex: 1; display: flex; flex-direction: column;
+  min-height: 100vh;
+}
+
+.topbar {
+  background: var(--up-surface);
+  border-bottom: 1px solid var(--up-border);
+  padding: 0 32px;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 50;
+}
+.topbar__title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--up-primary);
+}
+.topbar__actions { display: flex; align-items: center; gap: 12px; }
+
+.page-content { padding: 28px 32px; flex: 1; }
+
+/* ── CARDS ───────────────────────────────────────────────── */
+.card {
+  background: var(--up-surface);
+  border: 1px solid var(--up-border);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--up-primary); margin-bottom: 16px;
+}
+
+/* ── STAT CARDS ──────────────────────────────────────────── */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--up-surface);
+  border: 1px solid var(--up-border); border-radius: 12px;
+  padding: 18px 20px;
+}
+.stat-card__label { font-size: 0.75rem; color: var(--up-muted); margin-bottom: 6px; }
+.stat-card__value {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem; font-weight: 700; color: var(--up-primary);
+}
+.stat-card__sub { font-size: 0.75rem; color: var(--up-muted); margin-top: 4px; }
+
+/* ── BUTTONS ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem; font-weight: 500;
+  cursor: pointer; border: none;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--up-primary); color: #fff; }
+.btn-primary:hover { background: #0d2f52; }
+.btn-accent  { background: var(--up-accent); color: var(--up-primary); font-weight: 600; }
+.btn-accent:hover { background: #00bde8; }
+.btn-ghost {
+  background: transparent; color: var(--up-muted);
+  border: 1px solid var(--up-border);
+}
+.btn-ghost:hover { background: var(--up-bg); color: var(--up-primary); }
+.btn-danger { background: #FEE2E2; color: var(--up-error); }
+.btn-danger:hover { background: #FECACA; }
+.btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+.btn svg { width: 15px; height: 15px; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .sidebar { width: 60px; }
+  .sidebar__logo-text, .nav-item span, .sidebar__user-info,
+  .nav-section-label, .nav-badge { display: none; }
+  .main-area { margin-left: 60px; }
+  .page-content { padding: 20px 16px; }
+}
+  </style>
 </head>
 <body>
 
@@ -180,6 +394,283 @@
 <!-- Call placeholder toast -->
 <div id="call-toast" style="display:none;position:fixed;bottom:28px;right:28px;background:var(--up-primary);color:#fff;padding:14px 20px;border-radius:12px;font-size:0.875rem;z-index:300;border-left:4px solid var(--up-accent)"></div>
 
-<script type="module" src="/js/messenger.js"></script>
+<script>/**
+ * DSphere — messenger.js
+ * Real-time messaging via Firestore.
+ * Collections:
+ *   conversations/{id}  — metadata (type, name, members[], lastMessage, lastAt)
+ *   conversations/{id}/messages/{mid} — {uid, name, text, createdAt}
+ */
+'use strict';
+
+import { db }       from './firebase-config.js';
+import {
+  collection, doc, addDoc, query, where, orderBy,
+  onSnapshot, serverTimestamp, updateDoc, getDocs, setDoc
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+/* ── state ───────────────────────────────────────────────── */
+let currentChatId   = null;
+let currentChatType = 'dm';   // 'dm' | 'group'
+let unsubMessages   = null;
+let unsubConvList   = null;
+let allConvos       = [];
+
+/* ── auth ────────────────────────────────────────────────── */
+function getUser() {
+  try { return JSON.parse(sessionStorage.getItem('dsphere_user') || '{}'); } catch { return {}; }
+}
+function getToken() { return sessionStorage.getItem('dsphere_access') || ''; }
+
+/* ── init ────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  if (!getToken()) { window.location.href = 'index.html'; return; }
+  const user = getUser();
+  const name = user.name || user.email || 'User';
+  document.getElementById('user-name').textContent  = name;
+  document.getElementById('user-role').textContent  = user.role || 'user';
+  document.getElementById('user-avatar').textContent = name.charAt(0).toUpperCase();
+  subscribeToConversations(user.uid);
+});
+
+/* ── CONVERSATION LIST ───────────────────────────────────── */
+function subscribeToConversations(uid) {
+  if (unsubConvList) unsubConvList();
+  const q = query(
+    collection(db, 'conversations'),
+    where('members', 'array-contains', uid),
+    orderBy('lastAt', 'desc')
+  );
+  unsubConvList = onSnapshot(q, snap => {
+    allConvos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderConvoList(allConvos, currentChatType);
+  });
+}
+
+function renderConvoList(convos, type) {
+  const user = getUser();
+  const filtered = convos.filter(c => c.type === type);
+  const list  = document.getElementById('chat-list');
+  const empty = document.getElementById('chat-list-empty');
+
+  if (!filtered.length) {
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  list.innerHTML = filtered.map(c => {
+    const isGroup = c.type === 'group';
+    const label   = isGroup ? c.name : (c.memberNames?.find(n => n !== (user.name||user.email)) || 'Unknown');
+    const initial = label.charAt(0).toUpperCase();
+    const preview = esc(c.lastMessage || 'No messages yet');
+    const time    = c.lastAt ? fmtTime(c.lastAt.toDate ? c.lastAt.toDate() : new Date(c.lastAt)) : '';
+    const active  = c.id === currentChatId ? ' active' : '';
+    return `
+      <div class="chat-item${active}" onclick="openChat('${c.id}')">
+        <div class="chat-item__avatar${isGroup?' group':''}">${initial}</div>
+        <div class="chat-item__info">
+          <div class="chat-item__name">${esc(label)}</div>
+          <div class="chat-item__preview">${preview}</div>
+        </div>
+        <div class="chat-item__meta">
+          <span class="chat-item__time">${time}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* ── OPEN CHAT ───────────────────────────────────────────── */
+function openChat(convId) {
+  if (unsubMessages) { unsubMessages(); unsubMessages = null; }
+  currentChatId = convId;
+  const convo = allConvos.find(c => c.id === convId);
+  if (!convo) return;
+
+  const user    = getUser();
+  const isGroup = convo.type === 'group';
+  const label   = isGroup ? convo.name : (convo.memberNames?.find(n => n !== (user.name||user.email)) || 'Unknown');
+  const initial = label.charAt(0).toUpperCase();
+
+  document.getElementById('no-chat-selected').style.display = 'none';
+  const activeChat = document.getElementById('active-chat');
+  activeChat.style.display = 'flex';
+
+  document.getElementById('chat-avatar').textContent = initial;
+  document.getElementById('chat-name').textContent   = label;
+  document.getElementById('chat-status').textContent = isGroup
+    ? `${convo.members?.length || 0} members`
+    : 'Direct message';
+
+  document.getElementById('chat-messages').innerHTML = '';
+
+  // Re-render list to update active highlight
+  renderConvoList(allConvos, currentChatType);
+
+  // Subscribe to messages
+  const msgQ = query(
+    collection(db, 'conversations', convId, 'messages'),
+    orderBy('createdAt', 'asc')
+  );
+  unsubMessages = onSnapshot(msgQ, snap => {
+    renderMessages(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+  });
+}
+
+/* ── RENDER MESSAGES ─────────────────────────────────────── */
+function renderMessages(msgs) {
+  const user      = getUser();
+  const container = document.getElementById('chat-messages');
+  let   lastDate  = '';
+
+  container.innerHTML = msgs.map(m => {
+    const isOwn = m.uid === user.uid;
+    const ts    = m.createdAt?.toDate ? m.createdAt.toDate() : new Date(m.createdAt || Date.now());
+    const date  = ts.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long' });
+    const time  = ts.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+    const initial = (m.name || 'U').charAt(0).toUpperCase();
+
+    let divider = '';
+    if (date !== lastDate) {
+      lastDate = date;
+      divider  = `<div class="date-divider" style="margin:8px 0">${date}</div>`;
+    }
+
+    return `${divider}
+      <div class="msg-group ${isOwn ? 'own' : 'other'}">
+        ${!isOwn ? `<div class="msg-avatar">${initial}</div>` : ''}
+        <div>
+          ${!isOwn ? `<div class="msg-sender">${esc(m.name || 'Unknown')}</div>` : ''}
+          <div class="msg-bubble">${esc(m.text)}</div>
+          <div class="msg-meta">${time}</div>
+        </div>
+        ${isOwn ? `<div class="msg-avatar" style="background:var(--up-accent);color:var(--up-primary)">${initial}</div>` : ''}
+      </div>`;
+  }).join('');
+
+  // scroll to bottom
+  container.scrollTop = container.scrollHeight;
+}
+
+/* ── SEND MESSAGE ────────────────────────────────────────── */
+async function sendMessage() {
+  if (!currentChatId) return;
+  const input = document.getElementById('msg-input');
+  const text  = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  input.style.height = '';
+
+  const user = getUser();
+  const now  = new Date();
+
+  try {
+    await addDoc(
+      collection(db, 'conversations', currentChatId, 'messages'),
+      { uid: user.uid, name: user.name || user.email, text, createdAt: serverTimestamp() }
+    );
+    // update conversation lastMessage
+    await updateDoc(doc(db, 'conversations', currentChatId), {
+      lastMessage: text.slice(0, 60),
+      lastAt: serverTimestamp(),
+    });
+  } catch (err) {
+    console.error('Send failed:', err);
+  }
+}
+
+function handleMsgKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+/* ── NEW CHAT ────────────────────────────────────────────── */
+function openNewChatModal()  { document.getElementById('new-chat-modal').style.display = 'flex'; }
+function closeNewChatModal() { document.getElementById('new-chat-modal').style.display = 'none'; }
+function toggleGroupName() {
+  const type = document.getElementById('new-chat-type').value;
+  document.getElementById('group-name-field').style.display = type === 'group' ? '' : 'none';
+}
+
+async function createNewChat() {
+  const user      = getUser();
+  const type      = document.getElementById('new-chat-type').value;
+  const groupName = document.getElementById('new-group-name').value.trim();
+  const rawEmails = document.getElementById('new-chat-recipients').value.trim();
+  const emails    = rawEmails.split(',').map(e => e.trim()).filter(Boolean);
+
+  if (!emails.length) { alert('Enter at least one recipient email.'); return; }
+
+  // Resolve emails to UIDs via Firestore
+  const members     = [user.uid];
+  const memberNames = [user.name || user.email];
+
+  for (const email of emails) {
+    const snap = await getDocs(
+      query(collection(db, 'users'), where('email', '==', email.toLowerCase()))
+    );
+    if (snap.empty) { alert(`User not found: ${email}`); return; }
+    const u = snap.docs[0];
+    members.push(u.id);
+    memberNames.push(u.data().name || email);
+  }
+
+  const convData = {
+    type,
+    name: type === 'group' ? (groupName || 'Unnamed Group') : '',
+    members,
+    memberNames,
+    lastMessage: '',
+    lastAt: serverTimestamp(),
+    createdAt: serverTimestamp(),
+  };
+
+  const ref = await addDoc(collection(db, 'conversations'), convData);
+  closeNewChatModal();
+  switchChatTab(type);
+  openChat(ref.id);
+}
+
+/* ── TABS ────────────────────────────────────────────────── */
+function switchChatTab(type) {
+  currentChatType = type;
+  document.getElementById('tab-dm').classList.toggle('active',    type === 'dm');
+  document.getElementById('tab-group').classList.toggle('active', type === 'group');
+  renderConvoList(allConvos, type);
+}
+
+/* ── SEARCH ──────────────────────────────────────────────── */
+function filterChats(q) {
+  const filtered = allConvos.filter(c =>
+    (c.name || c.memberNames?.join(' ') || '').toLowerCase().includes(q.toLowerCase())
+  );
+  renderConvoList(filtered, currentChatType);
+}
+
+/* ── CALL PLACEHOLDER ────────────────────────────────────── */
+function callPlaceholder(type) {
+  const toast = document.getElementById('call-toast');
+  toast.textContent = `${type === 'audio' ? '📞' : '📹'} ${type === 'audio' ? 'Audio' : 'Video'} calls will be available in a future update (WebRTC / Agora.io integration).`;
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 4000);
+}
+
+/* ── HELPERS ─────────────────────────────────────────────── */
+function esc(s = '') {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtTime(d) {
+  const now   = new Date();
+  const diff  = (now - d) / 1000;
+  if (diff < 60)     return 'just now';
+  if (diff < 3600)   return Math.floor(diff/60) + 'm';
+  if (diff < 86400)  return d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+}
+function logout() { sessionStorage.clear(); window.location.href = 'index.html'; }</script>
 </body>
 </html>
