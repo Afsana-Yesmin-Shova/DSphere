@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const ALLOWED_DOMAINS = ['@uttarauniversity.edu.bd', '@uttarauniversity.ac.bd'];
+const ALLOWED_DOMAINS = ' ';
 const API_BASE = "https://dsphere.onrender.com";
 let   OTP_TIMER_ID   = null;
 let   currentEmail   = '';
@@ -28,7 +28,7 @@ function switchTab(tab) {
   clearAllErrors();
 }
 
-function validateUniversityEmail(e) { const email = e.trim().toLowerCase(); return ALLOWED_DOMAINS.some(domain => email.endsWith(domain)); }
+function validateUniversityEmail(e) { return e.includes('@'); }
 function showError(id, msg) { const el=document.getElementById(id); if(el) el.textContent=msg; }
 function clearError(id)     { const el=document.getElementById(id); if(el) el.textContent=''; }
 function clearAllErrors()   {
