@@ -90,14 +90,17 @@ function saveSession(data) {
   sessionStorage.setItem('dsphere_user',    JSON.stringify(data.user||{}));
 }
 
-async function apiFetch(endpoint, options={}) {
-  const url=`${API_BASE}${endpoint}`;
-  const headers={'Content-Type':'application/json'};
-  const token=sessionStorage.getItem('dsphere_access');
-  if(token) headers['Authorization']=`Bearer ${token}`;
-  const res=await fetch(url,{...options, headers:{...headers,...(options.headers||{})}});
-  const data=await res.json();
-  if(!res.ok) throw {status:res.status, detail:data.detail||'Request failed.'};
+async function apiFetch(endpoint, opts = {}) {
+  const url = `${API_BASE}${endpoint}`;
+  const headers = { 'Content-Type': 'application/json' };
+  const token = sessionStorage.getItem('dsphere_access');
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  const res = await fetch(url, {
+    ...opts,
+    headers: { ...headers, ...(opts.headers || {}) },
+  });
+  const data = await res.json();
+  if (!res.ok) throw { status: res.status, detail: data.detail || 'Request failed.' };
   return data;
 }
 
