@@ -7,9 +7,222 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/css/variables.css"/>
-  <link rel="stylesheet" href="/css/dashboard.css"/>
-  <link rel="stylesheet" href="/css/network.css"/>
+  <style>
+    :root {
+  --up-bg: #f8fafc;
+  --up-surface: #ffffff;
+  --up-primary: #0a2540;
+  --up-accent: #00d4ff;
+  --up-text: #15273f;
+  --up-muted: rgba(21, 39, 63, 0.72);
+  --up-border: rgba(10, 37, 64, 0.14);
+  --up-success: #22c55e;
+  --up-error: #e53935;
+  --pw-weak: #fb7185;
+  --pw-fair: #fbbf24;
+  --pw-good: #38bdf8;
+  --pw-strong: #22c55e;
+}
+/* ============================================================
+   DSphere — dashboard.css
+   Shared layout: sidebar nav, topbar, page shell
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--up-bg);
+  color: var(--up-text);
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar {
+  width: 240px; min-height: 100vh;
+  background: var(--up-primary);
+  display: flex; flex-direction: column;
+  padding: 0;
+  position: fixed; top: 0; left: 0; bottom: 0;
+  z-index: 100;
+  transition: width 0.25s;
+}
+
+.sidebar__logo {
+  display: flex; align-items: center; gap: 10px;
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.sidebar__logo svg { width: 32px; height: 32px; }
+.sidebar__logo-text {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 1.35rem; color: #fff; letter-spacing: -0.02em;
+}
+
+.sidebar__nav {
+  flex: 1; padding: 16px 12px;
+  display: flex; flex-direction: column; gap: 2px;
+  overflow-y: auto;
+}
+
+.nav-section-label {
+  font-size: 0.65rem; font-weight: 500;
+  color: rgba(255,255,255,.28);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 12px 8px 6px;
+}
+
+.nav-item {
+  display: flex; align-items: center; gap: 11px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: rgba(255,255,255,.62);
+  font-size: 0.88rem; font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+.nav-item:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.9); }
+.nav-item.active {
+  background: rgba(0,212,255,.12);
+  color: #fff;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute; left: 0; top: 6px; bottom: 6px;
+  width: 3px; background: var(--up-accent);
+  border-radius: 0 2px 2px 0;
+}
+.nav-item__icon { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.75; }
+.nav-item.active .nav-item__icon { opacity: 1; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--up-accent); color: var(--up-primary);
+  font-size: 0.65rem; font-weight: 700;
+  padding: 2px 6px; border-radius: 999px;
+  line-height: 1.4;
+}
+
+.sidebar__footer {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.sidebar__user {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sidebar__user:hover { background: rgba(255,255,255,.06); }
+.sidebar__avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--up-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700;
+  color: var(--up-primary); flex-shrink: 0;
+}
+.sidebar__user-info { flex: 1; overflow: hidden; }
+.sidebar__user-name {
+  font-size: 0.82rem; font-weight: 500; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sidebar__user-role { font-size: 0.7rem; color: rgba(255,255,255,.38); }
+
+/* ── MAIN AREA ───────────────────────────────────────────── */
+.main-area {
+  margin-left: 240px;
+  flex: 1; display: flex; flex-direction: column;
+  min-height: 100vh;
+}
+
+.topbar {
+  background: var(--up-surface);
+  border-bottom: 1px solid var(--up-border);
+  padding: 0 32px;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 50;
+}
+.topbar__title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--up-primary);
+}
+.topbar__actions { display: flex; align-items: center; gap: 12px; }
+
+.page-content { padding: 28px 32px; flex: 1; }
+
+/* ── CARDS ───────────────────────────────────────────────── */
+.card {
+  background: var(--up-surface);
+  border: 1px solid var(--up-border);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--up-primary); margin-bottom: 16px;
+}
+
+/* ── STAT CARDS ──────────────────────────────────────────── */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--up-surface);
+  border: 1px solid var(--up-border); border-radius: 12px;
+  padding: 18px 20px;
+}
+.stat-card__label { font-size: 0.75rem; color: var(--up-muted); margin-bottom: 6px; }
+.stat-card__value {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem; font-weight: 700; color: var(--up-primary);
+}
+.stat-card__sub { font-size: 0.75rem; color: var(--up-muted); margin-top: 4px; }
+
+/* ── BUTTONS ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem; font-weight: 500;
+  cursor: pointer; border: none;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--up-primary); color: #fff; }
+.btn-primary:hover { background: #0d2f52; }
+.btn-accent  { background: var(--up-accent); color: var(--up-primary); font-weight: 600; }
+.btn-accent:hover { background: #00bde8; }
+.btn-ghost {
+  background: transparent; color: var(--up-muted);
+  border: 1px solid var(--up-border);
+}
+.btn-ghost:hover { background: var(--up-bg); color: var(--up-primary); }
+.btn-danger { background: #FEE2E2; color: var(--up-error); }
+.btn-danger:hover { background: #FECACA; }
+.btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+.btn svg { width: 15px; height: 15px; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .sidebar { width: 60px; }
+  .sidebar__logo-text, .nav-item span, .sidebar__user-info,
+  .nav-section-label, .nav-badge { display: none; }
+  .main-area { margin-left: 60px; }
+  .page-content { padding: 20px 16px; }
+}
+    body { background: #0b1120; color: #d1d5db; font-family: sans-serif; }
+main { padding: 2rem; }
+  </style>
 </head>
 <body>
 
@@ -157,6 +370,153 @@
   </div>
 </div>
 
-<script src="/js/network.js"></script>
+<script>
+  /**
+ * DSphere — network.js
+ * Calls POST /network/suggest and renders subnet + topology results.
+ */
+'use strict';
+
+const API_BASE = 'https://dsphere.onrender.com';
+
+function getToken() { return sessionStorage.getItem('dsphere_access') || ''; }
+function getUser()  { try { return JSON.parse(sessionStorage.getItem('dsphere_user')||'{}'); } catch { return {}; } }
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!getToken()) { window.location.href = 'index.html'; return; }
+  const u = getUser();
+  const n = u.name || u.email || 'User';
+  document.getElementById('user-name').textContent  = n;
+  document.getElementById('user-role').textContent  = u.role || 'user';
+  document.getElementById('user-avatar').textContent = n.charAt(0).toUpperCase();
+});
+
+function setPurpose(text, btn) {
+  document.getElementById('purpose').value = text;
+  document.querySelectorAll('.purpose-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+async function calculate() {
+  const deviceStr = document.getElementById('device-count').value.trim();
+  const purpose   = document.getElementById('purpose').value.trim();
+  const baseIp    = document.getElementById('base-ip').value.trim() || '192.168.1.0';
+
+  // clear errors
+  document.getElementById('err-devices').textContent = '';
+  document.getElementById('err-purpose').textContent = '';
+
+  let hasErr = false;
+  const devices = parseInt(deviceStr, 10);
+  if (!deviceStr || isNaN(devices) || devices < 1) {
+    document.getElementById('err-devices').textContent = 'Enter a valid device count (≥ 1).';
+    hasErr = true;
+  }
+  if (!purpose) {
+    document.getElementById('err-purpose').textContent = 'Describe the network purpose.';
+    hasErr = true;
+  }
+  if (hasErr) return;
+
+  const btn = document.getElementById('calc-btn');
+  btn.disabled = true;
+  btn.textContent = 'Calculating…';
+
+  try {
+    const res = await fetch(`${API_BASE}/network/suggest`, {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify({ device_count: devices, purpose, base_network: baseIp }),
+    });
+
+    if (res.status === 401) { window.location.href = 'index.html'; return; }
+    if (!res.ok) { const d = await res.json(); alert(d.detail || 'Calculation failed.'); return; }
+
+    const data = await res.json();
+    renderResults(data);
+  } catch (err) {
+    alert('Network error. Is the backend running?');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<svg viewBox="0 0 20 20" fill="none" style="width:16px;height:16px"><path d="M10 2v16M2 10h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Calculate &amp; Suggest`;
+  }
+}
+
+function renderResults(data) {
+  const { subnet, topology, input } = data;
+  const primary = topology.primary;
+  const alt     = topology.alternate;
+
+  // Hide empty state, show results
+  document.getElementById('net-empty-state').style.display = 'none';
+  document.getElementById('results-panel').style.display   = 'block';
+
+  // Banner
+  document.getElementById('topo-icon').textContent  = primary.icon || '🕸️';
+  document.getElementById('topo-name').textContent  = primary.name;
+  document.getElementById('topo-desc').textContent  = primary.description;
+  document.getElementById('topo-badge').textContent = subnet.cidr_notation;
+
+  // Subnet grid
+  const gridItems = [
+    { label: 'CIDR Notation',      value: subnet.cidr_notation,     mono: true },
+    { label: 'Subnet Mask',        value: subnet.subnet_mask,        mono: true },
+    { label: 'Network Address',    value: subnet.network_address,    mono: true },
+    { label: 'Broadcast Address',  value: subnet.broadcast_address,  mono: true },
+    { label: 'First Usable Host',  value: subnet.first_host,         mono: true },
+    { label: 'Last Usable Host',   value: subnet.last_host,          mono: true },
+    { label: 'Usable Hosts',       value: subnet.usable_hosts.toLocaleString() },
+    { label: 'Total Addresses',    value: subnet.network_size.toLocaleString() },
+    { label: 'Host Bits',          value: `/${subnet.host_bits}` },
+    { label: 'Network Bits',       value: `/${subnet.network_bits}` },
+  ];
+
+  document.getElementById('subnet-grid').innerHTML = gridItems.map(i => `
+    <div class="subnet-cell">
+      <div class="subnet-cell__label">${i.label}</div>
+      <div class="subnet-cell__value${i.mono?' mono':''}">${i.value}</div>
+    </div>`).join('');
+
+  // Alternate topology
+  if (alt) {
+    document.getElementById('alt-topo-card').style.display = '';
+    document.getElementById('alt-icon').textContent = alt.icon || '🔗';
+    document.getElementById('alt-name').textContent = alt.name;
+    document.getElementById('alt-desc').textContent = alt.description;
+  } else {
+    document.getElementById('alt-topo-card').style.display = 'none';
+  }
+
+  // Use cases
+  document.getElementById('use-cases').innerHTML = (primary.use_cases || [])
+    .map(u => `<li>${u}</li>`).join('');
+
+  // Scroll results into view
+  document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copyResults() {
+  const cidr  = document.querySelector('.subnet-cell__value.mono')?.textContent || '';
+  const cells = document.querySelectorAll('.subnet-cell');
+  let text    = 'DSphere Network Suggestion\n' + '─'.repeat(40) + '\n';
+  cells.forEach(c => {
+    const lbl = c.querySelector('.subnet-cell__label')?.textContent || '';
+    const val = c.querySelector('.subnet-cell__value')?.textContent || '';
+    text += `${lbl.padEnd(22)}: ${val}\n`;
+  });
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('[onclick="copyResults()"]');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => {
+      btn.innerHTML = '<svg viewBox="0 0 20 20" fill="none" style="width:15px;height:15px"><rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M3 13V5a2 2 0 012-2h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Copy Results to Clipboard';
+    }, 2000);
+  });
+}
+
+function logout() { sessionStorage.clear(); window.location.href = 'index.html'; }
+</script>
 </body>
 </html>
