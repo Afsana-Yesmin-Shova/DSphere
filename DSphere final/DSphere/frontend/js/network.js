@@ -4,7 +4,7 @@
  */
 'use strict';
 
-const API_BASE = 'https://your-backend.onrender.com';
+const API_BASE = 'https://dsphere.onrender.com/';
 
 function getToken() { return sessionStorage.getItem('dsphere_access') || ''; }
 function getUser()  { try { return JSON.parse(sessionStorage.getItem('dsphere_user')||'{}'); } catch { return {}; } }
