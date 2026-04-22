@@ -4,7 +4,7 @@
 'use strict';
 
 const ALLOWED_DOMAINS = ['@uttarauniversity.edu.bd', '@uttarauniversity.ac.bd'];
-const API_BASE = 'https://dsphere.onrender.com';
+const API_BASE = "https://dsphere.onrender.com";
 let   OTP_TIMER_ID   = null;
 let   currentEmail   = '';
 let   currentFlow    = 'register';
